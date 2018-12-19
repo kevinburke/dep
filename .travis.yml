@@ -14,6 +14,8 @@ jobs:
       os: linux
       go: 1.10.x
       script:
+        - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+        - hg -v --debug identify ssh://hg@bitbucket.org/mattfarina/testhgrepo
         - travis_wait 20 make test
         - ./hack/coverage.bash
       after_success:
