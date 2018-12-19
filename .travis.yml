@@ -14,9 +14,7 @@ jobs:
       os: linux
       go: 1.10.x
       script:
-        - cat ~/.ssh/config; true
-        - cat /etc/ssh/ssh_config; true
-        - travis_wait 50 make validate test
+        - travis_wait 20 make test
         - ./hack/coverage.bash
       after_success:
         - codeclimate-test-reporter < coverage.txt

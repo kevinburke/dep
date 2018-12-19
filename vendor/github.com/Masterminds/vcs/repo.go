@@ -233,6 +233,8 @@ func (b *base) CmdFromDir(cmd string, args ...string) *exec.Cmd {
 
 func (b *base) RunFromDir(cmd string, args ...string) ([]byte, error) {
 	c := b.CmdFromDir(cmd, args...)
+	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
 	out, err := c.CombinedOutput()
 	return out, err
 }

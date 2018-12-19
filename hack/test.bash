@@ -13,6 +13,7 @@ set -e
 IMPORT_DURING_SOLVE=${IMPORT_DURING_SOLVE:-false}
 
 go test -v -timeout=4m -race \
+	-run TestGetSources/inner/github.com/Masterminds/VCSTestRepo \
     -ldflags '-X github.com/golang/dep/cmd/dep.flagImportDuringSolve=${IMPORT_DURING_SOLVE}' \
     ./gps
 
