@@ -14,7 +14,7 @@ jobs:
       os: linux
       go: 1.10.x
       script:
-        - make validate test
+        - travis_wait 50 make validate test
         - ./hack/coverage.bash
       after_success:
         - codeclimate-test-reporter < coverage.txt
@@ -26,7 +26,7 @@ jobs:
       install: skip
       env:
         - DEPTESTBYPASS501=1
-      script: make test
+      script: travis_wait 50 make test
     - <<: *simple-test
       go: tip
     - <<: *simple-test
@@ -46,7 +46,7 @@ jobs:
         # for future safety.
         # Related: https://superuser.com/questions/1044130/why-am-i-having-how-can-i-fix-this-error-shell-session-update-command-not-f
         - trap EXIT
-        - make test
+        - travis_wait 50 make test
     - go: 1.10.x
       # Run on OS X so that we get a CGO-enabled binary for this OS; see
       # https://github.com/golang/dep/issues/1838 for more details.
