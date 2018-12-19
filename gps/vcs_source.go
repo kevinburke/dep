@@ -32,6 +32,7 @@ func (bs *baseVCSSource) existsLocally(ctx context.Context) bool {
 }
 
 func (bs *baseVCSSource) existsUpstream(ctx context.Context) bool {
+	fmt.Println("preparing to ping", bs.repo.Remote())
 	return bs.repo.Ping()
 }
 

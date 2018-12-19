@@ -12,9 +12,9 @@ set -e
 
 IMPORT_DURING_SOLVE=${IMPORT_DURING_SOLVE:-false}
 
-go test -v -timeout=40m -race \
+go test -v -timeout=4m -race \
     -ldflags '-X github.com/golang/dep/cmd/dep.flagImportDuringSolve=${IMPORT_DURING_SOLVE}' \
-    ./...
+    ./gps
 
 if ! ./dep status -out .dep.status.file.output; then exit 1; fi
 if ! ./dep status > .dep.status.stdout.output; then
