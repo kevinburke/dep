@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/Masterminds/semver"
 	"github.com/golang/dep/gps/pkgtree"
@@ -217,7 +218,11 @@ func (*gitSource) existsCallsListVersions() bool {
 func (s *gitSource) listVersions(ctx context.Context) (vlist []PairedVersion, err error) {
 	r := s.repo
 
-	cmd := commandContext(ctx, "git", "ls-remote", r.Remote())
+	// "git ls-remote git://bitbucket.org/somerepo" hangs indefinitely on
+	// Bitbucket, so cancel it if we get no response
+	timeoutctx, cancel := context.WithTimeout(ctx, 2*time.Minute)
+	defer cancel()
+	cmd := commandContext(timeoutctx, "git", "ls-remote", r.Remote())
 	// We want to invoke from a place where it's not possible for there to be a
 	// .git file instead of a .git directory, as git ls-remote will choke on the
 	// former and erroneously quit. However, we can't be sure that the repo
