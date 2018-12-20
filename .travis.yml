@@ -9,6 +9,7 @@ jobs:
       install:
         - make get-deps
         - npm install -g codeclimate-test-reporter
+        - ssh-keyscan -t $TRAVIS_SSH_KEY_TYPES -H bitbucket.org >> ~/.ssh/known_hosts
       env:
         - DEPTESTBYPASS501=1
       os: linux
@@ -26,7 +27,9 @@ jobs:
       install: skip
       env:
         - DEPTESTBYPASS501=1
-      script: make test
+      script:
+        - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+        - make test
     - <<: *simple-test
       go: tip
     - <<: *simple-test
@@ -46,6 +49,8 @@ jobs:
         # for future safety.
         # Related: https://superuser.com/questions/1044130/why-am-i-having-how-can-i-fix-this-error-shell-session-update-command-not-f
         - trap EXIT
+        - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+        - git ls-remote git://bitbucket.org/mattfarina/testhgrepo
         - make test
     - go: 1.10.x
       # Run on OS X so that we get a CGO-enabled binary for this OS; see
