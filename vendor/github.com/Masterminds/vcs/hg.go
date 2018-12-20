@@ -300,7 +300,7 @@ func (s *HgRepo) TagsFromCommit(id string) ([]string, error) {
 
 // Ping returns if remote location is accessible.
 func (s *HgRepo) Ping() bool {
-	_, err := s.run("hg", "identify", s.Remote())
+	_, err := s.run("hg", "--debug", "-v", "identify", s.Remote())
 	return err == nil
 }
 

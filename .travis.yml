@@ -15,7 +15,7 @@ jobs:
       go: 1.10.x
       script:
         - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
-        - make validate test
+        - make test
         - ./hack/coverage.bash
       after_success:
         - codeclimate-test-reporter < coverage.txt

@@ -590,7 +590,7 @@ func (sg *sourceGateway) sourceExistsUpstream(ctx context.Context) (sourceState,
 	if sg.src.existsCallsListVersions() {
 		return sg.loadLatestVersionList(ctx)
 	}
-	fmt.Printf("checking source exist upstream: %v", sg.src.upstreamURL())
+	fmt.Printf("checking source exist upstream: %v\n", sg.src.upstreamURL())
 	err := sg.suprvsr.do(ctx, sg.src.sourceType(), ctSourcePing, func(ctx context.Context) error {
 		if !sg.src.existsUpstream(ctx) {
 			return errors.Errorf("source does not exist upstream: %s: %s", sg.src.sourceType(), sg.src.upstreamURL())

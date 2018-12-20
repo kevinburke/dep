@@ -4,7 +4,7 @@ ARCH := $(shell go env GOARCH)
 GOPATH := $(shell go env GOPATH)
 GOBIN := $(GOPATH)/bin
 
-default: build validate test
+default: build test
 
 get-deps:
 	go get -u golang.org/x/lint/golint honnef.co/go/tools/cmd/megacheck
