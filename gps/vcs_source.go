@@ -235,6 +235,7 @@ func (s *gitSource) listVersions(ctx context.Context) (vlist []PairedVersion, er
 	}
 	// Ensure no prompting for PWs
 	cmd.SetEnv(append([]string{"GIT_ASKPASS=", "GIT_TERMINAL_PROMPT=0"}, os.Environ()...))
+	fmt.Println("git ls-remote", r.Remote())
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		return nil, errors.Wrap(err, string(out))
