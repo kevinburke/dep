@@ -32,7 +32,10 @@ func (bs *baseVCSSource) existsLocally(ctx context.Context) bool {
 }
 
 func (bs *baseVCSSource) existsUpstream(ctx context.Context) bool {
-	return bs.repo.Ping()
+	fmt.Println("ping", bs.repo.Remote())
+	result := bs.repo.Ping()
+	fmt.Println("ping result", result)
+	return result
 }
 
 func (*baseVCSSource) existsCallsListVersions() bool {

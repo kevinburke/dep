@@ -317,6 +317,7 @@ func (sg *sourceGateway) existsInCache(ctx context.Context) error {
 
 func (sg *sourceGateway) existsUpstream(ctx context.Context) error {
 	sg.mu.Lock()
+	fmt.Println("require source exists upstream")
 	err := sg.require(ctx, sourceExistsUpstream)
 	sg.mu.Unlock()
 	return err
@@ -589,6 +590,7 @@ func (sg *sourceGateway) sourceExistsUpstream(ctx context.Context) (sourceState,
 	if sg.src.existsCallsListVersions() {
 		return sg.loadLatestVersionList(ctx)
 	}
+	fmt.Printf("checking source exist upstream: %v", sg.src.upstreamURL())
 	err := sg.suprvsr.do(ctx, sg.src.sourceType(), ctSourcePing, func(ctx context.Context) error {
 		if !sg.src.existsUpstream(ctx) {
 			return errors.Errorf("source does not exist upstream: %s: %s", sg.src.sourceType(), sg.src.upstreamURL())
