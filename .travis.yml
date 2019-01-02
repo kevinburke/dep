@@ -7,6 +7,7 @@ jobs:
     - stage: test
       go_import_path: github.com/golang/dep
       install:
+        - ssh-keyscan -t $TRAVIS_SSH_KEY_TYPES -H bitbucket.org >> ~/.ssh/known_hosts
         - make get-deps
         - npm install -g codeclimate-test-reporter
       env:
@@ -23,18 +24,22 @@ jobs:
       go: 1.9.x
       stage: test
       go_import_path: github.com/golang/dep
-      install: skip
+      install:
+        - ssh-keyscan -t $TRAVIS_SSH_KEY_TYPES -H bitbucket.org >> ~/.ssh/known_hosts
       env:
         - DEPTESTBYPASS501=1
       script: make test
     - <<: *simple-test
       go: tip
+      install:
+        - ssh-keyscan -t $TRAVIS_SSH_KEY_TYPES -H bitbucket.org >> ~/.ssh/known_hosts
     - <<: *simple-test
       os: osx
       go: 1.10.x
       install:
         # brew takes horribly long to update itself despite the above caching
         # attempt; only bzr install if it's not on the $PATH
+        - ssh-keyscan -t $TRAVIS_SSH_KEY_TYPES -H bitbucket.org >> ~/.ssh/known_hosts
         - test $(which bzr) || brew install bzr
       env:
         - HOMEBREW_NO_AUTO_UPDATE=1
